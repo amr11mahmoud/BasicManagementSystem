@@ -1,4 +1,5 @@
 ﻿using BasicMangementSystem.Web.Data;
+using BasicMangementSystem.Web.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -16,12 +17,6 @@ namespace BasicMangementSystem.Web.Startup
 
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddAuthentication(options =>
-            //{ 
-            //    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            //}).AddJwtBearer();
-
-            //services.AddAuthorization();
             services.AddControllers();
             services.AddDbContext<MangementSystemDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("Defualt")));
@@ -41,7 +36,7 @@ namespace BasicMangementSystem.Web.Startup
 
             //app.UseAuthentication();
             //app.UseAuthorization();
-
+            app.UseRequestLogger();
             app.UseSwagger();
             app.UseSwaggerUI(c => {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Basic Management System API V1");
